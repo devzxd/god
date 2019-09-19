@@ -9,13 +9,14 @@ import com.baidu.aip.bodyanalysis.AipBodyAnalysis;
  * @description:
  */
 public class AipUtil {
-    private static final String APP_ID="17273387";
-    private static final String API_KEY="2S11uyDitFmU3PM5pGgMZ9hV";
-    private static final String SECRET_KEY="Bt3mg4gttfFdCTOGMjNL40nhZoBXQy45";
+    private static final String APP_ID = "17273387";
+    private static final String API_KEY = "2S11uyDitFmU3PM5pGgMZ9hV";
+    private static final String SECRET_KEY = "Bt3mg4gttfFdCTOGMjNL40nhZoBXQy45";
     private static AipBodyAnalysis client = null;
-    public static AipBodyAnalysis getClient(){
+
+    public static AipBodyAnalysis getClient() {
         // 初始化一个AipBodyAnalysis
-        if(client == null){
+        if (client == null) {
             client = new AipBodyAnalysis(APP_ID, API_KEY, SECRET_KEY);
             // 可选：设置网络连接参数
             client.setConnectionTimeoutInMillis(2000);
