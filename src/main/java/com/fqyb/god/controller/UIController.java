@@ -1,19 +1,21 @@
 package com.fqyb.god.controller;
 
 import com.fasterxml.jackson.databind.*;
-import com.fqyb.god.pojo.ApiCallback;
 import com.fqyb.god.util.AipUtil;
 import com.fqyb.god.util.ImgUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
 import sun.misc.BASE64Decoder;
 
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author: zhaoxudong
@@ -23,6 +25,8 @@ import java.util.List;
 @Controller
 @RequestMapping
 public class UIController {
+    @Autowired
+    SimpMessagingTemplate template;
 
     @GetMapping("/takePhoto")
     private String takePhoto(){
@@ -48,13 +52,13 @@ public class UIController {
                 JSONObject jsonRst = result.getJSONObject(i);
                 System.out.println(jsonRst);
                 if (!jsonRst.get("classname").equals("Face")){
+                    template.convertAndSend("/topic/god",jsonRst.get("classname"));
                     return jsonRst.toString();
                 }
-
             }
-
         }
-
         return null;
     }
+
+
 }
