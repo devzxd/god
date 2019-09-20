@@ -1,6 +1,7 @@
 package com.fqyb.god.controller;
 
 import com.fasterxml.jackson.databind.*;
+import com.fqyb.god.service.PPTService;
 import com.fqyb.god.util.AipUtil;
 import com.fqyb.god.util.ImgUtil;
 import org.json.JSONArray;
@@ -28,13 +29,16 @@ public class UIController {
     @Autowired
     SimpMessagingTemplate template;
 
+    @Autowired
+    PPTService pptService;
+
     @GetMapping("/takePhoto")
     private String takePhoto(){
         return "takePhoto";
     }
     @ResponseBody
     @PostMapping("/getPhoto")
-    private String getPhoto(@RequestBody HashMap<String,Object> map) throws IOException{
+    private String getPhoto(@RequestBody HashMap<String,Object> map) throws Exception{
         HashMap<String, String> options = new HashMap<>();
         //解析base64
         byte[] bytes = new BASE64Decoder().decodeBuffer(ImgUtil.replacePre(map.get("base64").toString()));
@@ -55,6 +59,7 @@ public class UIController {
                 System.out.println(classname);
                 if (!(classname.equals("Face")&&classname.equals("Insult"))){
                     template.convertAndSend("/topic/god", classname);
+                    pptService.dealHandSign(classname);
                     return classname;
                 }
             }
