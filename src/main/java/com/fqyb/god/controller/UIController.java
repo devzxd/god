@@ -17,17 +17,13 @@ import java.util.HashMap;
  */
 @Controller
 @RequestMapping
-public class Test {
+public class UIController {
     @ResponseBody
     @PostMapping("/")
     private String test(@RequestBody HashMap<String,Object> map) throws IOException {
         HashMap<String, String> options = new HashMap<String, String>();
         byte[] bytes = new BASE64Decoder().decodeBuffer(ImgUtil.replacePre(map.get("base64").toString()));
         return AipUtil.getClient().gesture(bytes,options).toString();
-    }
-    @GetMapping("test1")
-    private String test1(){
-        return "photo";
     }
 
     @GetMapping("test2")
