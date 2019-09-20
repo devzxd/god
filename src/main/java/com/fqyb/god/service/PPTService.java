@@ -22,8 +22,9 @@ public class PPTService {
                 rb.keyRelease(KeyEvent.VK_UP);
             }
 
-        } else if ("2".equals(handSign) || "w".equals(handSign)) {
+        } else if ("one".equalsIgnoreCase(handSign) || "w".equals(handSign)) {
             for (int i = 0; i < num; i++) {
+                Thread.sleep(2000);
                 System.out.println("down");
                 rb.keyPress(KeyEvent.VK_DOWN);
                 rb.keyRelease(KeyEvent.VK_DOWN);
