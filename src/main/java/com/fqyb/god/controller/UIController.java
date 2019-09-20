@@ -1,18 +1,16 @@
 package com.fqyb.god.controller;
 
-import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fqyb.god.util.AipUtil;
 import com.fqyb.god.util.ImgUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.socket.messaging.WebSocketStompClient;
 import sun.misc.BASE64Decoder;
-
 
 import java.io.IOException;
 import java.util.HashMap;
