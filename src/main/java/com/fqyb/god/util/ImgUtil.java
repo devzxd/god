@@ -20,7 +20,7 @@ public class ImgUtil {
      */
     public static  String replacePre(String imgString) {
         //允许的图片格式（可配置）
-        String imgType = "jpg,png,jpeg";
+        String imgType = "jpg,png,jpeg,webp";
         if (!StringUtils.isEmpty(imgType)) {
             String[] imgTypes = imgType.split(",");
             Pattern pattern;
