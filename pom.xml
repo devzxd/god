@@ -62,7 +62,6 @@
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 	</dependencies>
-e
 	<build>
 		<plugins>
 			<plugin>

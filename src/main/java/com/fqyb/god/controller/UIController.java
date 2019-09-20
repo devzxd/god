@@ -48,12 +48,14 @@ public class UIController {
 
         if (result_num >0) {
             JSONArray result = rst.getJSONArray("result");
+
             for (int i= 0;i<result.length();i++){
                 JSONObject jsonRst = result.getJSONObject(i);
-                System.out.println(jsonRst);
-                if (!jsonRst.get("classname").equals("Face")){
-                    template.convertAndSend("/topic/god",jsonRst.get("classname"));
-                    return jsonRst.toString();
+                String classname = jsonRst.get("classname").toString();
+                System.out.println(classname);
+                if (!(classname.equals("Face")&&classname.equals("Insult"))){
+                    template.convertAndSend("/topic/god", classname);
+                    return classname;
                 }
             }
         }
