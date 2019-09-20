@@ -17,5 +17,8 @@ public class GodApplication {
     public String a() {
         return "a";
     }
-
+    @GetMapping("/camera")
+    public String camera() {
+        return "camera";
+    }
 }
