@@ -12,10 +12,16 @@
 <br/>
 
 <div>
-    <div style="width: 60%"><video id="v" style="height: 300px;"></video></div>
+    <div style="width: 60%">
+        <video id="v" style="height: 300px;"></video>
+    </div>
     <div style="width: 40%">返回信息
         <input id="consoleLog" style="color:#F00;font-weight:bold;"/>
     </div>
+
+    <a href="#" onclick="change('ppt')">PPT</a>
+    <a href="#" onclick="change('map')">map</a>
+    <a href="#" onclick="change('robot')">robot</a>
 </div>
 
 <canvas id="canvas" style="display:none;"></canvas>
@@ -88,9 +94,21 @@
                     }
                 });
             }
-        }, 2000);
+        }, 1000);
 
     })();
+
+    function change(flag) {
+        $.ajax({
+            url: "/change?flag=" + flag,
+            type: "PUT",
+            success: function (data) {
+            }
+        });
+        if (flag === 'robot') {
+            window.open('http://localhost:8080/robot');
+        }
+    }
 
 </script>
 </body>

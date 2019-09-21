@@ -7,6 +7,7 @@ public enum TypeEnum {
     VIDEO,
     PPT,
     MAP,
+    VIDEO,
     ROBOT;
 
 
@@ -24,6 +25,9 @@ public enum TypeEnum {
         }
         if(type.equalsIgnoreCase(ROBOT.name())){
             return ROBOT;
+        }
+        if(type.equalsIgnoreCase(VIDEO.name())){
+            return VIDEO;
         }
         log.error("没有匹配到类型");
         return null;

@@ -15,59 +15,23 @@ import java.awt.event.MouseEvent;
  */
 @Slf4j
 @Component
-public class PPTHandler implements DreamHandler{
+public class PPTHandler implements DreamHandler {
     public void dealHandSign(String handSign) throws Exception {
         final Robot rb = new Robot();
-        int num = 1;
-        if ("one121".equalsIgnoreCase(handSign)) {
-            for (int i = 0; i < num; i++) {
+        if ("eight".equalsIgnoreCase(handSign)) {
                 System.out.println("up");
                 rb.keyPress(KeyEvent.VK_UP);
                 rb.keyRelease(KeyEvent.VK_UP);
-            }
-
-        } else if ("five".equalsIgnoreCase(handSign) || "w".equals(handSign)) {
-            for (int i = 0; i < num; i++) {
-                Thread.sleep(2000);
-                System.out.println("down");
-                rb.keyPress(KeyEvent.VK_DOWN);
-                rb.keyRelease(KeyEvent.VK_DOWN);
-            }
-
-        } else if ("lock".equals(handSign)) {
-            rb.keyPress(KeyEvent.VK_CONTROL);
-            rb.keyPress(KeyEvent.VK_Q);
-            rb.keyRelease(KeyEvent.VK_Q);
-            rb.keyRelease(KeyEvent.VK_CONTROL);
-
-        } else if ("3".equals(handSign) || "d".equals(handSign)) {
-            for (int i = 0; i < num; i++) {
-//                Thread.sleep(20);
-                System.out.println("turnleft");
-                rb.keyPress(KeyEvent.VK_LEFT);
-                rb.delay(100);//停顿100ms
-                rb.keyRelease(KeyEvent.VK_LEFT);
-            }
-
-        } else if ("4".equals(handSign) || "a".equals(handSign)) {
-            for (int i = 0; i < num; i++) {
-//                Thread.sleep(20);
-                System.out.println("turnright");
-                rb.keyPress(KeyEvent.VK_RIGHT);
-                rb.delay(100);//停顿100ms
-                rb.keyRelease(KeyEvent.VK_RIGHT);
-            }
-
-        } else if ("11".equals(handSign) || "rollup".equals(handSign)) {
-            for (int i = 0; i < num; i++) {
-                rb.mouseWheel(50);
-            }
-        } else if ("12".equals(handSign) || "rolldown".equals(handSign)) {
-            for (int i = 0; i < num; i++) {
-                rb.mouseWheel(-50);
-            }
+        } else if ("five".equalsIgnoreCase(handSign)) {
+            System.out.println("down");
+            rb.keyPress(KeyEvent.VK_DOWN);
+            rb.keyRelease(KeyEvent.VK_DOWN);
+        } else if ("Fist".equalsIgnoreCase(handSign)) {
+            rb.keyPress(KeyEvent.VK_WINDOWS);
+            rb.keyPress(KeyEvent.VK_L);
+            rb.keyRelease(KeyEvent.VK_WINDOWS);
+            rb.keyRelease(KeyEvent.VK_L);
         }
-
 
     }
 
@@ -78,10 +42,10 @@ public class PPTHandler implements DreamHandler{
 
     @Override
     public void handler(String classname) {
-       try{
-           dealHandSign(classname);
-       }catch (Exception e){
-           log.error("操作ppt异常{}",e);
-       }
+        try {
+            dealHandSign(classname);
+        } catch (Exception e) {
+            log.error("操作ppt异常{}", e);
+        }
     }
 }

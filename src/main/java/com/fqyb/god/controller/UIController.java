@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Decoder;
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -27,6 +26,7 @@ import java.util.HashMap;
 @RequestMapping
 public class UIController {
 
+    public static String typeEnum = "PPT";
 
     @GetMapping("/takePhoto")
     private String takePhoto() {
@@ -52,8 +52,8 @@ public class UIController {
                     JSONObject jsonRst = result.getJSONObject(i);
                     String classname = jsonRst.get("classname").toString();
                     System.out.println(classname);
-                    if (!(classname.equalsIgnoreCase("Face") )) {
-                        DreamHandler dreamHandler = ServiceFactory.getDreamHandler(TypeEnum.getType(apiRequest.getTypeEnum()));
+                    if (!(classname.equalsIgnoreCase("Face"))) {
+                        DreamHandler dreamHandler = ServiceFactory.getDreamHandler(TypeEnum.getType(typeEnum));
                         dreamHandler.handler(classname);
                         return classname;
                     }
@@ -63,5 +63,10 @@ public class UIController {
             log.error("详细信息查看控制台{}", e);
         }
         return null;
+    }
+
+    @PutMapping("/change")
+    public void change(@RequestParam String flag) {
+        typeEnum = flag;
     }
 }
