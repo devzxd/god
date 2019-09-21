@@ -14,7 +14,7 @@
 <div>
     <div style="width: 60%">
         <video id="v" style="height: 300px;"></video>
-        <img src="/video.png"></img>
+        <img id="help" src=""/>
     </div>
     <div style="width: 40%">返回信息
         <input id="consoleLog" style="color:#F00;font-weight:bold;"/>
@@ -26,9 +26,6 @@
         <a href="#" onclick="change('robot')">robot</a>
         <a href="#" onclick="change('video')">video</a>
 
-        <div style="margin-right: auto">
-
-        </div>
     </div>
 
 
@@ -109,14 +106,19 @@
     })();
 
     function change(flag) {
+
         $.ajax({
             url: "/change?flag=" + flag,
             type: "PUT",
             success: function (data) {
             }
         });
+        document.getElementById("help").setAttribute("src", "/" + flag + ".jpg");
         if (flag === 'robot') {
             window.open('http://localhost:8080/robot');
+        }
+        if (flag === 'map') {
+            window.open('https://www.google.com/maps/?hl=zh-CN');
         }
     }
 
