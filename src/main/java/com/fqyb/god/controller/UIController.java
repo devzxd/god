@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Decoder;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -51,7 +52,7 @@ public class UIController {
                     JSONObject jsonRst = result.getJSONObject(i);
                     String classname = jsonRst.get("classname").toString();
                     System.out.println(classname);
-                    if (!(classname.equalsIgnoreCase("Face") || classname.equalsIgnoreCase("Insult"))) {
+                    if (!(classname.equalsIgnoreCase("Face") )) {
                         DreamHandler dreamHandler = ServiceFactory.getDreamHandler(TypeEnum.getType(apiRequest.getTypeEnum()));
                         dreamHandler.handler(classname);
                         return classname;
@@ -63,6 +64,4 @@ public class UIController {
         }
         return null;
     }
-
-
 }

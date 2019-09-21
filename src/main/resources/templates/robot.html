@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>three.js webgl - skinning and morphing</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="main.css">
+    <style>
+        body {
+            color: #222;
+        }
+
+        a {
+            color: #2fa1d6;
+        }
+
+        p {
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 2em;
+        }
+    </style>
+</head>
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.min.js"></script>
+<script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.min.js"></script>
+
+</script>
+
+
+
+<body>
+
+<script type="module">
+
+import * as THREE from 'https://threejs.org/build/three.module.js';
+
+import Stats from 'https://threejs.org/examples/jsm/libs/stats.module.js';
+import { GUI } from 'https://threejs.org/examples/jsm/libs/dat.gui.module.js';
+
+import { GLTFLoader } from 'https://threejs.org/examples/jsm/loaders/GLTFLoader.js';
+
+
+var container, stats, clock, gui, mixer, actions, activeAction, previousAction;
+var camera, scene, renderer, model, face;
+
+var api = { state: 'Walking' };
+
+init();
+animate();
+
+function init() {
+
+    container = document.createElement( 'div' );
+    document.body.appendChild( container );
+
+    camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 100 );
+    camera.position.set( - 5, 3, 10 );
+    camera.lookAt( new THREE.Vector3( 0, 2, 0 ) );
+
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color( 0xe0e0e0 );
+    scene.fog = new THREE.Fog( 0xe0e0e0, 20, 100 );
+
+    clock = new THREE.Clock();
+
+    // lights
+
+    var light = new THREE.HemisphereLight( 0xffffff, 0x444444 );
+    light.position.set( 0, 20, 0 );
+    scene.add( light );
+
+    light = new THREE.DirectionalLight( 0xffffff );
+    light.position.set( 0, 20, 10 );
+    scene.add( light );
+
+    // ground
+    /*
+                    var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
+                    mesh.rotation.x = - Math.PI / 2;
+                    scene.add( mesh );
+
+                    var grid = new THREE.GridHelper( 200, 40, 0x000000, 0x000000 );
+                    grid.material.opacity = 0.2;
+                    grid.material.transparent = true;
+                    scene.add( grid );
+    */
+
+    // model
+
+    var loader = new GLTFLoader();
+    loader.load( 'https://threejs.org/examples/models/gltf/RobotExpressive/RobotExpressive.glb', function ( gltf ) {
+
+        model = gltf.scene;
+        scene.add( model );
+
+        createGUI( model, gltf.animations );
+
+    }, undefined, function ( e ) {
+
+        console.error( e );
+
+    } );
+
+    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    renderer.gammaOutput = true;
+    renderer.gammaFactor = 2.2;
+    container.appendChild( renderer.domElement );
+
+    window.addEventListener( 'resize', onWindowResize, false );
+
+    // stats
+    stats = new Stats();
+
+
+}
+
+function createGUI( model, animations ) {
+
+    var states = [ 'Idle', 'Walking', 'Running', 'Dance', 'Death', 'Sitting', 'Standing' ];
+    var emotes = [ 'Jump', 'Yes', 'No', 'Wave', 'Punch', 'ThumbsUp' ];
+
+    gui = new GUI();
+
+    mixer = new THREE.AnimationMixer( model );
+
+    actions = {};
+
+    for ( var i = 0; i < animations.length; i ++ ) {
+
+        var clip = animations[ i ];
+        var action = mixer.clipAction( clip );
+        actions[ clip.name ] = action;
+
+        if ( emotes.indexOf( clip.name ) >= 0 || states.indexOf( clip.name ) >= 4 ) {
+
+            action.clampWhenFinished = true;
+            action.loop = THREE.LoopOnce;
+
+        }
+
+    }
+
+    activeAction = actions[ 'Walking' ];
+    activeAction.play();
+    expressionFolder.open();
+
+}
+
+
+
+function fadeToAction( name, duration ) {
+
+    previousAction = activeAction;
+    activeAction = actions[ name ];
+
+    if ( previousAction !== activeAction ) {
+
+        previousAction.fadeOut( duration );
+
+    }
+
+    activeAction
+        .reset()
+        .setEffectiveTimeScale( 1 )
+        .setEffectiveWeight( 1 )
+        .fadeIn( duration )
+        .play();
+
+}
+
+function onWindowResize() {
+
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
+
+//
+
+function animate() {
+
+    var dt = clock.getDelta();
+
+    if ( mixer ) mixer.update( dt );
+
+    requestAnimationFrame( animate );
+
+    renderer.render( scene, camera );
+
+    stats.update();
+
+}
+
+
+$(document).ready(function(){
+
+    var removeMunu = setInterval(function(){
+        if($(".close-button").html()!=undefined){
+            $(".close-button").hide();
+            clearInterval(removeMunu);
+        }
+    }, 1);
+
+
+    $("html").on("click","body",{foo:"文本:"},function(event){
+        var emotes = [ 'Jump', 'Yes', 'No', 'Wave', 'Punch', 'ThumbsUp' ];
+        var states = [ 'Idle', 'Walking', 'Running', 'Dance', 'Death', 'Sitting', 'Standing' ];
+        fadeToAction(emotes[1],0.2);
+        setTimeout(function(){
+            $("#div2").hide()
+            fadeToAction("Walking",0.2);
+        }, 900);
+    });
+
+
+})
+
+
+
+var emotes = [ 'Jump', 'Yes', 'No', 'Wave', 'Punch', 'ThumbsUp' ];
+var states = [ 'Idle', 'Walking', 'Running', 'Dance', 'Death', 'Sitting', 'Standing' ];
+
+var myMap = new Map();
+// 打招呼
+myMap.set("Five", "Wave");
+
+//赞同
+myMap.set("Ok", "Yes");
+
+//点赞
+myMap.set("Thumb_up", "ThumbsUp");
+myMap.set("One", "ThumbsUp");
+
+//不赞同
+myMap.set("Thumb_down", "No");
+
+//跳跃
+myMap.set("Two", "Jump");
+myMap.set("Heart_single", "Jump");
+
+
+//舞蹈
+myMap.set("Rock", "Dance");
+myMap.set("Six", "Dance");
+
+//出拳
+myMap.set("Fist", "Punch");
+
+// 死
+myMap.set("Insult", "Death");
+myMap.set("Eight", "Death");
+
+
+// stomp 客户端
+var stompClient = null;
+/**
+ *  建立 websocket 连接
+ */
+function connect() {
+
+    var socket = new SockJS("http://localhost:8080/god");
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({},function (frame){
+        //监听弹幕信息
+        stompClient.subscribe('/topic/god/robot',function (response) {
+
+
+            var event=myMap.get(response.body);
+
+            console.log(event);
+            var emotesIndex=emotes.indexOf(event);
+            if(emotesIndex>-1){
+
+                fadeToAction(emotes[emotesIndex],0.2);
+
+
+                setTimeout(function(){
+                    fadeToAction("Walking",0.2);
+                }, 800);
+            }else{
+                var statesIndex=states.indexOf(event);
+                if(statesIndex>-1){
+                    fadeToAction(states[statesIndex],0.2);
+                }
+            }
+        })
+    })
+
+}
+
+$(function(){
+    connect();
+})
+
+
+
+</script>
+
+
+
+</body>
+
+
+
+</html>
