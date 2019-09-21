@@ -7,7 +7,6 @@ public enum TypeEnum {
     VIDEO,
     PPT,
     MAP,
-    VIDEO,
     ROBOT;
 
 
