@@ -1,5 +1,8 @@
 package com.fqyb.god.service;
 
+import com.fqyb.god.common.TypeEnum;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
@@ -10,12 +13,13 @@ import java.awt.event.MouseEvent;
  * @author：zhaoyi
  * @createTime: 2019/9/20,4:08 下午
  */
-@Service
-public class PPTService {
+@Slf4j
+@Component
+public class PPTHandler implements DreamHandler{
     public void dealHandSign(String handSign) throws Exception {
         final Robot rb = new Robot();
         int num = 1;
-        if ("1".equals(handSign) || "s".equals(handSign)) {
+        if ("one121".equalsIgnoreCase(handSign)) {
             for (int i = 0; i < num; i++) {
                 System.out.println("up");
                 rb.keyPress(KeyEvent.VK_UP);
@@ -65,5 +69,19 @@ public class PPTService {
         }
 
 
+    }
+
+    @Override
+    public TypeEnum getHandlerType() {
+        return TypeEnum.PPT;
+    }
+
+    @Override
+    public void handler(String classname) {
+       try{
+           dealHandSign(classname);
+       }catch (Exception e){
+           log.error("操作ppt异常{}",e);
+       }
     }
 }
