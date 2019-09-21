@@ -72,7 +72,7 @@
                 $.ajax({
                     contentType: "application/json",
                     url: "/getPhoto",
-                    data: JSON.stringify({base64: data}),
+                    data: JSON.stringify({base64: data,typeEnum:"PPT"}),
                     type: "POST",
                     dataType: "json",
                     success: function (data) {

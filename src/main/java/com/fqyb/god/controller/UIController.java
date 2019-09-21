@@ -1,21 +1,20 @@
 package com.fqyb.god.controller;
 
-import com.fasterxml.jackson.databind.*;
-import com.fqyb.god.service.PPTService;
+import com.fqyb.god.common.TypeEnum;
+import com.fqyb.god.config.ServiceFactory;
+import com.fqyb.god.pojo.ApiRequest;
+import com.fqyb.god.service.DreamHandler;
+import com.fqyb.god.util.AipResponeseUtil;
 import com.fqyb.god.util.AipUtil;
 import com.fqyb.god.util.ImgUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.socket.messaging.WebSocketStompClient;
 import sun.misc.BASE64Decoder;
 
 
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -23,46 +22,44 @@ import java.util.HashMap;
  * @date: 2019-09-19 19:28
  * @description:
  */
+@Slf4j
 @Controller
 @RequestMapping
 public class UIController {
-    @Autowired
-    SimpMessagingTemplate template;
-
-    @Autowired
-    PPTService pptService;
 
     @GetMapping("/takePhoto")
     private String takePhoto(){
         return "takePhoto";
     }
+
     @ResponseBody
     @PostMapping("/getPhoto")
-    private String getPhoto(@RequestBody HashMap<String,Object> map) throws Exception{
+    private String getPhoto(@RequestBody ApiRequest apiRequest) throws Exception{
         HashMap<String, String> options = new HashMap<>();
         //解析base64
-        byte[] bytes = new BASE64Decoder().decodeBuffer(ImgUtil.replacePre(map.get("base64").toString()));
+        byte[] bytes = new BASE64Decoder().decodeBuffer(ImgUtil.replacePre(apiRequest.getBase64()));
         //通过API获取图片解析结果
-        JSONObject rst = AipUtil.getClient().gesture(bytes, options);
+        JSONObject rst ;
+        try{
+           rst = AipUtil.getClient().gesture(bytes, options);
+           AipResponeseUtil.check(rst);
+            int result_num = rst.getInt("result_num");
+            if (result_num >0) {
+                JSONArray result = rst.getJSONArray("result");
+                for (int i= 0;i<result.length();i++){
+                    JSONObject jsonRst = result.getJSONObject(i);
+                    String classname = jsonRst.get("classname").toString();
+                    System.out.println(classname);
 
-        int result_num = rst.getInt("result_num");
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        if (result_num >0) {
-            JSONArray result = rst.getJSONArray("result");
-
-            for (int i= 0;i<result.length();i++){
-                JSONObject jsonRst = result.getJSONObject(i);
-                String classname = jsonRst.get("classname").toString();
-                System.out.println(classname);
-                if (!(classname.equals("Face")&&classname.equals("Insult"))){
-                    template.convertAndSend("/topic/god", classname);
-                    pptService.dealHandSign(classname);
-                    return classname;
+                    if (!(classname.equalsIgnoreCase("Face")||classname.equalsIgnoreCase("Insult"))){
+                        DreamHandler dreamHandler = ServiceFactory.getDreamHandler(TypeEnum.getType(apiRequest.getTypeEnum()));
+                        dreamHandler.handler(classname);
+                        return classname;
+                    }
                 }
             }
+        }catch (Exception e){
+            log.error("详细信息查看控制台{}",e);
         }
         return null;
     }

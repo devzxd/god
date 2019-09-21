@@ -1,14 +1,11 @@
 package com.fqyb.god.controller;
 
 
-import com.fqyb.god.service.PPTService;
+import com.fqyb.god.service.PPTHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.awt.*;
-import java.awt.event.KeyEvent;
 
 /**
  * @author：zhaoyi
@@ -17,7 +14,7 @@ import java.awt.event.KeyEvent;
 @RestController
 public class PPTController {
     @Autowired
-    PPTService pptService = new PPTService();
+    PPTHandler pptService ;
 
     @RequestMapping(value = "/dealHandSign", method = RequestMethod.GET)
     public String dealHandNum(String handSign) throws Exception {
