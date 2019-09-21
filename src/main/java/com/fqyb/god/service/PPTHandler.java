@@ -18,19 +18,21 @@ import java.awt.event.MouseEvent;
 public class PPTHandler implements DreamHandler {
     public void dealHandSign(String handSign) throws Exception {
         final Robot rb = new Robot();
-        if ("eight".equalsIgnoreCase(handSign)) {
-                System.out.println("up");
-                rb.keyPress(KeyEvent.VK_UP);
-                rb.keyRelease(KeyEvent.VK_UP);
+        if ("Thumb_up".equalsIgnoreCase(handSign) || "One".equalsIgnoreCase(handSign)) {
+            System.out.println("up");
+            rb.keyPress(KeyEvent.VK_UP);
+            rb.keyRelease(KeyEvent.VK_UP);
         } else if ("five".equalsIgnoreCase(handSign)) {
             System.out.println("down");
             rb.keyPress(KeyEvent.VK_DOWN);
             rb.keyRelease(KeyEvent.VK_DOWN);
         } else if ("Fist".equalsIgnoreCase(handSign)) {
             rb.keyPress(KeyEvent.VK_WINDOWS);
-            rb.keyPress(KeyEvent.VK_L);
+            rb.keyPress(KeyEvent.VK_D);
+            rb.waitForIdle();
+            rb.keyRelease(KeyEvent.VK_D);
             rb.keyRelease(KeyEvent.VK_WINDOWS);
-            rb.keyRelease(KeyEvent.VK_L);
+
         }
 
     }
