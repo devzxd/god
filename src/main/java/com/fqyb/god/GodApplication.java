@@ -12,11 +12,11 @@ public class GodApplication {
     public static void main(String[] args) {
         SpringApplication.run(GodApplication.class, args);
     }
-
-    @GetMapping("/a")
-    public String a() {
-        return "a";
-    }
+//
+//    @GetMapping("/a")
+//    public String a() {
+//        return "a";
+//    }
     @GetMapping("/camera")
     public String camera() {
         return "camera";

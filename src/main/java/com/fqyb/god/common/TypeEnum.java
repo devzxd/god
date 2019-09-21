@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public enum TypeEnum {
+    VIDEO,
     PPT,
     MAP,
     VIDEO,
@@ -13,6 +14,9 @@ public enum TypeEnum {
 
     public static TypeEnum getType(String type){
 
+        if(type.equalsIgnoreCase(VIDEO.name())){
+            return VIDEO;
+        }
         if(type.equalsIgnoreCase(PPT.name())){
           return PPT;
         }
