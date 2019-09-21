@@ -234,16 +234,15 @@ myMap.set("Thumb_down", "No");
 myMap.set("Two", "Jump");
 myMap.set("Heart_single", "Jump");
 
-
 //舞蹈
 myMap.set("Rock", "Dance");
 myMap.set("Six", "Dance");
 
 //出拳
 myMap.set("Fist", "Punch");
+myMap.set("Insult", "Punch");
 
 // 死
-myMap.set("Insult", "Death");
 myMap.set("Eight", "Death");
 
 
@@ -260,7 +259,6 @@ function connect() {
     stompClient.connect({},function (frame){
         //监听弹幕信息
         stompClient.subscribe('/topic/god/robot',function (response) {
-
 
             var event=myMap.get(response.body);
 

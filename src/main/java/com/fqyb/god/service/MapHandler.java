@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 @Component
 @Slf4j
@@ -20,7 +22,11 @@ public class MapHandler implements DreamHandler {
     public void dealHandSign(String handSign) throws Exception {
         final Robot rb = new Robot();
         int num = 1;
-        if ("Thumb_up".equalsIgnoreCase(handSign)) {
+
+        rb.mousePress(InputEvent.BUTTON2_DOWN_MASK);
+        rb.mouseRelease(InputEvent.BUTTON2_DOWN_MASK);
+
+        if ("Thumb_up".equalsIgnoreCase(handSign) || "One".equalsIgnoreCase(handSign)) {
             for (int i = 0; i < num; i++) {
                 System.out.println("up");
                 rb.keyPress(KeyEvent.VK_UP);
@@ -34,13 +40,15 @@ public class MapHandler implements DreamHandler {
                 rb.keyRelease(KeyEvent.VK_DOWN);
             }
 
+
         } else if ("Fist".equals(handSign)) {
             rb.keyPress(KeyEvent.VK_CONTROL);
             rb.keyPress(KeyEvent.VK_Q);
             rb.keyRelease(KeyEvent.VK_Q);
             rb.keyRelease(KeyEvent.VK_CONTROL);
 
-        } else if ("Two".equals(handSign) || "d".equals(handSign)) {
+            //往左
+        } else if ("Two".equals(handSign) ) {
             for (int i = 0; i < num; i++) {
 //                Thread.sleep(20);
                 System.out.println("turnleft");
@@ -49,9 +57,9 @@ public class MapHandler implements DreamHandler {
                 rb.keyRelease(KeyEvent.VK_LEFT);
             }
 
-        } else if ("Three".equals(handSign) || "a".equals(handSign)) {
+            //往右
+        } else if ("Three".equals(handSign) || "Ok".equals(handSign)) {
             for (int i = 0; i < num; i++) {
-//                Thread.sleep(20);
                 System.out.println("turnright");
                 rb.keyPress(KeyEvent.VK_RIGHT);
                 rb.delay(100);//停顿100ms
@@ -59,16 +67,19 @@ public class MapHandler implements DreamHandler {
             }
 
             //放大/缩小
-        } else if ("Eight".equals(handSign) || "rollup".equals(handSign)) {
+        } else if ("Eight".equals(handSign) ) {
+            for (int i = 0; i < num; i++) {
+                rb.mouseWheel(-20);
+            }
+        } else if ("Seven".equals(handSign) || "Heart_single".equals(handSign)) {
             for (int i = 0; i < num; i++) {
                 rb.mouseWheel(50);
             }
-        } else if ("Seven".equals(handSign) || "rolldown".equals(handSign)) {
+        }else if ("Five".equals(handSign) ) {
             for (int i = 0; i < num; i++) {
-                rb.mouseWheel(-50);
+                rb.mouseWheel(-60);
             }
         }
-
 
     }
 

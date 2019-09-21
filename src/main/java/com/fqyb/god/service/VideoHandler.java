@@ -33,27 +33,27 @@ public class VideoHandler implements DreamHandler  {
                 rb.keyRelease(KeyEvent.VK_LEFT);
             }
 
-        } else if ("lock".equals(handSign)) {
+        } else if ("lock".equalsIgnoreCase(handSign)) {
             rb.keyPress(KeyEvent.VK_CONTROL);
             rb.keyPress(KeyEvent.VK_Q);
             rb.keyRelease(KeyEvent.VK_Q);
             rb.keyRelease(KeyEvent.VK_CONTROL);
         //音量放大
-        } else if ("Thumb_up".equals(handSign)) {
+        } else if ("Thumb_up".equalsIgnoreCase(handSign)) {
             for (int i = 0; i < num; i++) {
                 System.out.println("soundUp");
                 rb.keyPress(KeyEvent.VK_UP);
                 rb.keyRelease(KeyEvent.VK_UP);
             }
         //音量降低
-        } else if ("Thumb_down".equals(handSign)) {
+        } else if ("Thumb_down".equalsIgnoreCase(handSign)) {
             for (int i = 0; i < num; i++) {
                 System.out.println("soundDown");
                 rb.keyPress(KeyEvent.VK_DOWN);
                 rb.keyRelease(KeyEvent.VK_DOWN);
             }
         //播放/暂停
-        } else if ("Palm_up".equals(handSign)) {
+        } else if ("Palm_up".equalsIgnoreCase(handSign)) {
             for (int i = 0; i < num; i++) {
                 System.out.println("run/stop");
                 rb.keyPress(KeyEvent.VK_SPACE);
@@ -61,7 +61,7 @@ public class VideoHandler implements DreamHandler  {
             }
         }
         //上一集
-        else if ("Prayer".equals(handSign)) {
+        else if ("Prayer".equalsIgnoreCase(handSign)) {
             for (int i = 0; i < num; i++) {
                 System.out.println("上一集");
                 rb.keyPress(KeyEvent.VK_PAGE_UP);
@@ -69,7 +69,7 @@ public class VideoHandler implements DreamHandler  {
             }
         }
         //下一集
-        else if ("OK".equals(handSign)) {
+        else if ("OK".equalsIgnoreCase   (handSign)) {
             for (int i = 0; i < num; i++) {
                 System.out.println("下一集");
                 rb.keyPress(KeyEvent.VK_PAGE_DOWN);
