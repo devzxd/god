@@ -78,7 +78,7 @@ function init() {
     scene.add( light );
 
     // ground
-    /*
+
                     var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
                     mesh.rotation.x = - Math.PI / 2;
                     scene.add( mesh );
@@ -87,7 +87,7 @@ function init() {
                     grid.material.opacity = 0.2;
                     grid.material.transparent = true;
                     scene.add( grid );
-    */
+
 
     // model
 
@@ -209,18 +209,6 @@ $(document).ready(function(){
         }
     }, 1);
 
-
-    $("html").on("click","body",{foo:"文本:"},function(event){
-        var emotes = [ 'Jump', 'Yes', 'No', 'Wave', 'Punch', 'ThumbsUp' ];
-        var states = [ 'Idle', 'Walking', 'Running', 'Dance', 'Death', 'Sitting', 'Standing' ];
-        fadeToAction(emotes[1],0.2);
-        setTimeout(function(){
-            $("#div2").hide()
-            fadeToAction("Walking",0.2);
-        }, 900);
-    });
-
-
 })
 
 
@@ -266,7 +254,7 @@ var stompClient = null;
  */
 function connect() {
 
-    var socket = new SockJS("http://localhost:8080/god");
+    var socket = new SockJS("/god");
     stompClient = Stomp.over(socket);
 
     stompClient.connect({},function (frame){
