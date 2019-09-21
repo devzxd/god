@@ -268,10 +268,17 @@ function connect() {
 
                 fadeToAction(emotes[emotesIndex],0.2);
 
+                if(emotesIndex==0 || emotesIndex==4){
+                    setTimeout(function(){
+                        fadeToAction("Walking",0.2);
+                    }, 800);
+                }else{
+                    setTimeout(function(){
+                        fadeToAction("Walking",0.2);
+                    }, 1100);
+                }
 
-                setTimeout(function(){
-                    fadeToAction("Walking",0.2);
-                }, 800);
+
             }else{
                 var statesIndex=states.indexOf(event);
                 if(statesIndex>-1){
