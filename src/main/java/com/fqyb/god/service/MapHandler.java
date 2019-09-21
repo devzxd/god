@@ -79,6 +79,10 @@ public class MapHandler implements DreamHandler {
             for (int i = 0; i < num; i++) {
                 rb.mouseWheel(-60);
             }
+        }else if ("Fist".equals(handSign) ) {
+            for (int i = 0; i < num; i++) {
+                rb.mouseWheel(90);
+            }
         }
 
     }
