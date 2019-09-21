@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
  */
 @Component
 @Slf4j
-public class VideoHandler implements DreamHandler  {
+public class VideoHandler implements DreamHandler {
     public void dealHandSign(String handSign) throws Exception {
         final Robot rb = new Robot();
         int num = 1;
@@ -24,7 +24,7 @@ public class VideoHandler implements DreamHandler  {
                 rb.keyPress(KeyEvent.VK_RIGHT);
                 rb.keyRelease(KeyEvent.VK_RIGHT);
             }
-        //快退
+            //快退
         } else if ("One".equalsIgnoreCase(handSign)) {
             for (int i = 0; i < num; i++) {
                 Thread.sleep(2000);
@@ -41,14 +41,14 @@ public class VideoHandler implements DreamHandler  {
                 rb.keyPress(KeyEvent.VK_UP);
                 rb.keyRelease(KeyEvent.VK_UP);
             }
-        //音量降低
+            //音量降低
         } else if ("Thumb_down".equalsIgnoreCase(handSign)) {
             for (int i = 0; i < num; i++) {
                 System.out.println("soundDown");
                 rb.keyPress(KeyEvent.VK_DOWN);
                 rb.keyRelease(KeyEvent.VK_DOWN);
             }
-        //播放/暂停
+            //播放/暂停
         } else if ("Palm_up".equalsIgnoreCase(handSign)) {
             for (int i = 0; i < num; i++) {
                 System.out.println("run/stop");
@@ -65,12 +65,19 @@ public class VideoHandler implements DreamHandler  {
             }
         }
         //下一集
-        else if ("OK".equalsIgnoreCase   (handSign)) {
+        else if ("OK".equalsIgnoreCase(handSign)) {
             for (int i = 0; i < num; i++) {
                 System.out.println("下一集");
                 rb.keyPress(KeyEvent.VK_PAGE_DOWN);
                 rb.keyRelease(KeyEvent.VK_PAGE_DOWN);
             }
+        } else if ("Prayer".equalsIgnoreCase(handSign)) {
+            rb.keyPress(KeyEvent.VK_WINDOWS);
+            rb.keyPress(KeyEvent.VK_D);
+            rb.waitForIdle();
+            rb.keyRelease(KeyEvent.VK_D);
+            rb.keyRelease(KeyEvent.VK_WINDOWS);
+
         }
 
 
@@ -83,10 +90,10 @@ public class VideoHandler implements DreamHandler  {
 
     @Override
     public void handler(String classname) {
-        try{
+        try {
             dealHandSign(classname);
-        }catch (Exception e){
-            log.error("操作video异常{}",e);
+        } catch (Exception e) {
+            log.error("操作video异常{}", e);
         }
     }
 }
