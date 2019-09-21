@@ -41,7 +41,7 @@ public class MapHandler implements DreamHandler {
             }
 
 
-        } else if ("Fist".equalsIgnoreCase(handSign)) {
+        } else if ("Prayer".equalsIgnoreCase(handSign)) {
             rb.keyPress(KeyEvent.VK_WINDOWS);
             rb.keyPress(KeyEvent.VK_D);
             rb.waitForIdle();

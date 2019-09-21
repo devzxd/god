@@ -33,13 +33,9 @@ public class VideoHandler implements DreamHandler  {
                 rb.keyRelease(KeyEvent.VK_LEFT);
             }
 
-        } else if ("lock".equalsIgnoreCase(handSign)) {
-            rb.keyPress(KeyEvent.VK_CONTROL);
-            rb.keyPress(KeyEvent.VK_Q);
-            rb.keyRelease(KeyEvent.VK_Q);
-            rb.keyRelease(KeyEvent.VK_CONTROL);
+        }
         //音量放大
-        } else if ("Thumb_up".equalsIgnoreCase(handSign)) {
+        else if ("Thumb_up".equalsIgnoreCase(handSign)) {
             for (int i = 0; i < num; i++) {
                 System.out.println("soundUp");
                 rb.keyPress(KeyEvent.VK_UP);
@@ -61,7 +57,7 @@ public class VideoHandler implements DreamHandler  {
             }
         }
         //上一集
-        else if ("Prayer".equalsIgnoreCase(handSign)) {
+        else if ("Fist".equalsIgnoreCase(handSign)) {
             for (int i = 0; i < num; i++) {
                 System.out.println("上一集");
                 rb.keyPress(KeyEvent.VK_PAGE_UP);
