@@ -41,13 +41,13 @@ public class MapHandler implements DreamHandler {
             }
 
 
-        } else if ("Fist".equals(handSign)) {
-            rb.keyPress(KeyEvent.VK_CONTROL);
-            rb.keyPress(KeyEvent.VK_Q);
-            rb.keyRelease(KeyEvent.VK_Q);
-            rb.keyRelease(KeyEvent.VK_CONTROL);
+        } else if ("Fist".equalsIgnoreCase(handSign)) {
+            rb.keyPress(KeyEvent.VK_WINDOWS);
+            rb.keyPress(KeyEvent.VK_D);
+            rb.waitForIdle();
+            rb.keyRelease(KeyEvent.VK_D);
+            rb.keyRelease(KeyEvent.VK_WINDOWS);
 
-            //往左
         } else if ("Two".equals(handSign) ) {
             for (int i = 0; i < num; i++) {
 //                Thread.sleep(20);

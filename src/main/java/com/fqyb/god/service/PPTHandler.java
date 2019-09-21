@@ -26,14 +26,15 @@ public class PPTHandler implements DreamHandler {
             System.out.println("down");
             rb.keyPress(KeyEvent.VK_DOWN);
             rb.keyRelease(KeyEvent.VK_DOWN);
-        } else if ("Fist".equalsIgnoreCase(handSign)) {
-            rb.keyPress(KeyEvent.VK_WINDOWS);
-            rb.keyPress(KeyEvent.VK_D);
-            rb.waitForIdle();
-            rb.keyRelease(KeyEvent.VK_D);
-            rb.keyRelease(KeyEvent.VK_WINDOWS);
-
         }
+//        else if ("Fist".equalsIgnoreCase(handSign)) {
+//            rb.keyPress(KeyEvent.VK_WINDOWS);
+//            rb.keyPress(KeyEvent.VK_D);
+//            rb.waitForIdle();
+//            rb.keyRelease(KeyEvent.VK_D);
+//            rb.keyRelease(KeyEvent.VK_WINDOWS);
+//
+//        }
 
     }
 
