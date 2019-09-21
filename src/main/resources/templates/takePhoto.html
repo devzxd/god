@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<div id="cosoleLog" style="color:#F00;font-weight:bold">返回信息</div>
+<div id="consoleLog" style="color:#F00;font-weight:bold">返回信息</div>
 <br />
 <video id="v" style="width: 500px;height: 300px;"></video>
 <canvas id="canvas" style="display:none;"></canvas>
@@ -77,11 +77,11 @@
                     dataType: "json",
                     success: function (data) {
                         console.log(data)
-                        $("#cosoleLog").html(data.classname)
+                        $("#consoleLog").html(data.classname)
                     }
                 });
             }
-        },1000);
+        },2000);
 
     })();
 

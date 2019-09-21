@@ -2,6 +2,7 @@ package com.fqyb.god.controller;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.fqyb.god.service.PPTService;
 import com.fqyb.god.util.AipUtil;
 import com.fqyb.god.util.ImgUtil;
@@ -55,7 +56,7 @@ public class UIController {
                 JSONObject jsonRst = result.getJSONObject(i);
                 String classname = jsonRst.get("classname").toString();
                 System.out.println(classname);
-                if (!(classname.equals("Face")&&classname.equals("Insult"))){
+                if (!(classname.equals("Face")||classname.equals("Insult"))){
                     template.convertAndSend("/topic/god", classname);
                     pptService.dealHandSign(classname);
                     return classname;
